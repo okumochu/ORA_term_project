@@ -1,0 +1,15 @@
+# Python version: 3.10
+# This requirements.txt contains only the packages directly used by the project.
+# Dependencies will be automatically installed by pip.
+
+# Core deep learning frameworks
+# Note: For CUDA support, install PyTorch from: https://pytorch.org/get-started/locally/
+torch>=2.0.0
+torch-geometric>=2.0.0
+
+# Scientific computing
+numpy>=1.20.0
+
+# ML/Ops tools
+wandb>=0.15.0
+tqdm>=4.60.0
