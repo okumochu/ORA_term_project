@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flexible Job Shop Scheduling Problem (FJSP) with Graph-Based Reinforcement Learning
 
 This project implements a Graph-Based Reinforcement Learning approach using Heterogeneous Graph Transformer (HGT) for solving the Flexible Job Shop Scheduling Problem.
@@ -74,3 +75,6 @@ See LICENSE file for details.
 
 [Add your team members here]
 
+## About
+
+This is a term project for "Operations Research Applications and Implementation", focusing on analyzing the limitations of Flexible Job Shop Problem (FJSP) using GNN, particularly over-smoothing issues.
