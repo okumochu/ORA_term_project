@@ -77,3 +77,11 @@ See LICENSE file for details.
 ## About
 
 This is a term project for "Operations Research Applications and Implementation", focusing on analyzing the limitations of Flexible Job Shop Problem (FJSP) using GNN, particularly over-smoothing issues.
+
+## References
+
+1. Wang, R., Wang, G., Sun, J., Deng, F., & Chen, J. (2023). Flexible job shop scheduling via dual attention network-based reinforcement learning. *IEEE Transactions on Neural Networks and Learning Systems*, 35(3), 3091-3102.
+
+2. Hu, Z., Dong, Y., Wang, K., & Sun, Y. (2020, April). Heterogeneous graph transformer. In *Proceedings of the web conference 2020* (pp. 2704-2710).
+
+3. Fey, M., & Lenssen, J. E. (2019). Fast graph representation learning with PyTorch Geometric. *arXiv preprint arXiv:1903.02428*.
