@@ -261,9 +261,9 @@ def transform_to_FJSSP(input_path: str, flex: int, output_path: str, closed: boo
         content = f.read()
         data = format_tai_to_fjssp(content)
     if closed:
-        result = process_closed(data, flex)
+        process_closed(data, flex)
     else:
-        result = process_linked(data, flex)
-    brd_str = format_fjssp_to_brd(result["jobs"], result["machine_cnt"], flex)
+        process_linked(data, flex)
+    brd_str = format_fjssp_to_brd(data["jobs"], data["machine_cnt"], flex)
     with open(output_path, "w") as f:
         f.write(brd_str)
