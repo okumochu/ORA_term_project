@@ -65,18 +65,22 @@ class CLDataGenerator:
         """
         Generate a batch of FJSP instances with random sampling.
         
+        IMPORTANT: All environments within a batch have the same number of operations
+        (to prevent PPO update errors in parallel rollout). However, different batches
+        can have different operation numbers.
+        
         Uses the same problem_config throughout training, but generates new
         random instances for each batch to provide diversity in training.
         
         Args:
             num_envs: Number of parallel environments to generate
             fixed_parameter: Optional dict for fixing parameters across environments
-                           Currently kept for backward compatibility but not actively used
-                           since the same problem_config is used throughout training.
+                           (kept for backward compatibility)
         
         Returns:
             dataset_job_length: List of job length arrays, one per environment
                               Each array has shape [job_num] with operation counts per job
+                              All environments in batch have same total operation count
             dataset_op_pt: List of operation processing time matrices, one per environment
                          Each matrix has shape [total_ops, machine_num]
                          where op_pt[i,j] is processing time of operation i on machine j
@@ -85,6 +89,10 @@ class CLDataGenerator:
         if fixed_parameter is None:
             fixed_parameter = {}
         
+        # ALWAYS fix operation numbers within a batch for parallel rollout
+        # This prevents dimension mismatch errors in PPO updates
+        fixed_parameter['op_num'] = True
+        
         return self._generate_batch(num_envs, self.problem_config, fixed_parameter)
     
     def _generate_batch(self, num_envs: int, problem_params: Dict[str, Any], 
@@ -92,16 +100,21 @@ class CLDataGenerator:
         """
         Core batch generation logic.
         
-        Generates num_envs instances using uniform distribution sampling. The same
-        problem_config is used throughout training, ensuring consistent problem structure.
+        Generates num_envs instances using uniform distribution sampling. All environments
+        within a batch have the same number of operations (fixed via fixed_parameter['op_num']).
+        This ensures parallel rollout works correctly with PPO.
         
         Args:
             num_envs: Number of parallel environments to generate
             problem_params: Problem parameters dict (problem_config) - same for all batches
-            fixed_parameter: Dict for fixing parameters (kept for compatibility, not actively used)
+            fixed_parameter: Dict for fixing parameters within batch
+                           - 'op_num': Always True (enforced in sample_env)
+                           - 'compatibility': Optional
+                           - 'pt': Optional
         
         Returns:
             dataset_job_length: List of job length arrays, one per environment
+                              All environments have same total operation count within batch
             dataset_op_pt: List of operation processing time matrices, one per environment
         """
         job_num = problem_params['job_num']
