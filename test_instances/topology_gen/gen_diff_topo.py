@@ -252,7 +252,7 @@ def transform_to_FJSSP(input_path: str, flex: int, output_path: str, closed: boo
         input_path: str - the path of the input file
         flex: int - the flexibility
         output_path: str - the path of the output file
-        closed: bool - True for closed topology, False for parallel topology
+        closed: bool - True for closed topology, False for linked topology
     Returns:
         None
     """
