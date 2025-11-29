@@ -4,7 +4,7 @@ from gen_diff_topo import transform_to_FJSSP
 def main():
     # Get the directory paths
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    ta_dir = os.path.join(script_dir, "..", "ta")
+    ta_dir = os.path.join(script_dir, "..", "JSSP_data")
     output_dir = os.path.join(script_dir, "output")
 
     # Create output directory if it doesn't exist

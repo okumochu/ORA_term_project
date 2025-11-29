@@ -132,13 +132,18 @@ def format_fjssp_to_brd(jobs: List[Job], machine_cnt: int, flex: int) -> str:
     job_cnt = len(jobs)
     machine_cnt = machine_cnt
 
+    machine_ids = list(range(machine_cnt))
+    target_ids = machine_ids[:]
+    random.shuffle(target_ids)
+    machine_id_mapping = dict(zip(machine_ids, target_ids))
+
     brd_str = f"{job_cnt} {machine_cnt} {flex}\n"
     for job in jobs:
         job_line_str = f"{len(job.operations)} "
         for op in job.operations:
             job_line_str += f"{len(op.modes)} "
             for mode in op.modes:
-                job_line_str += f"{mode.machine_id} {mode.processing_time} "
+                job_line_str += f"{machine_id_mapping[mode.machine_id]} {mode.processing_time} "
         brd_str += job_line_str + "\n"
     return brd_str
 
@@ -214,7 +219,7 @@ def process_closed(data: Dict[str, Any], flex: int) -> None:
         for m in new_machine_set_dict[cur_machine]:
             if m == cur_machine:
                 continue
-            new_mode = OperationMode(machine_id=m, processing_time=processing_time)
+            new_mode = OperationMode(machine_id=m, processing_time=processing_time * random.normalvariate(1, 0.1))
             operation.modes.append(new_mode)
 
 
@@ -240,7 +245,7 @@ def process_linked(data: Dict[str, Any], flex: int) -> None:
         for m in new_machines:
             if m == cur_machine:
                 continue
-            new_mode = OperationMode(machine_id=m, processing_time=processing_time)
+            new_mode = OperationMode(machine_id=m, processing_time=processing_time * random.normalvariate(1, 0.1))
             op.modes.append(new_mode)
 
 
